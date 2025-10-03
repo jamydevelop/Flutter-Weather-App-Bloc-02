@@ -196,10 +196,45 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else if (state is WeatherBlocFailureState) {
-            return const Text(
-              'Something went wrong. Try another city.',
-              style: TextStyle(color: Colors.red),
+            return Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'Something went wrong. Try another city.',
+                      style: TextStyle(color: Colors.red),
+                    ), // TEXT FIELD to enter city name
+                    TextField(
+                      controller: _controller,
+                      decoration: const InputDecoration(
+                        labelText: 'Enter city name',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // SEARCH BUTTON
+                    ElevatedButton(
+                      onPressed: () {
+                        final city = _controller.text.trim();
+                        if (city.isNotEmpty) {
+                          context.read<WeatherBloc>().add(
+                            GetWeatherEvent(city),
+                          );
+                        }
+                        _controller.text = '';
+                      },
+                      child: const Text('Search'),
+                    ),
+                  ],
+                ),
+              ),
             );
+            // const Text(
+            //   'Something went wrong. Try another city.',
+            //   style: TextStyle(color: Colors.red),
+            // );
           } else {
             return Padding(
               padding: const EdgeInsets.all(28.0),
