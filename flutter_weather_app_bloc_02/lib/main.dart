@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_weather_app_bloc_02/views/home_page.dart';
 import 'package:flutter_weather_app_bloc_02/bloc/weather_bloc.dart';
 import 'package:flutter_weather_app_bloc_02/views/home_screen.dart';
 
