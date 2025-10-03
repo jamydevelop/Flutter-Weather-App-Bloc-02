@@ -133,17 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                  Center(
-                    child: Text(
-                      weather.amPm,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-
                   const SizedBox(height: 30),
 
                   // Humidity & Wind Speed
@@ -167,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Text(
-                                weather.humidity,
+                                '${weather.humidity} %',
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 16,
@@ -196,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Text(
-                                weather.windSpeed,
+                                '${weather.windSpeed} %',
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 16,
