@@ -44,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherBloc, WeatherState>(
       builder: (context, state) {
-        // Default colors
-        Color backgroundColor = Colors.white;
+        // Default text color and background image path
         Color textColor = Colors.black;
+        String backgroundImage = 'assets/morningBg.jpg';
 
         Widget child;
 
@@ -55,12 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (state is WeatherBlocSuccessState) {
           final weather = state.weather;
 
-          // Change colors based on AM/PM
+          // Use night background and white text for PM, else morning bg and black text for AM
           if (weather.amPm.toLowerCase() == 'pm') {
-            backgroundColor = Colors.black;
+            backgroundImage = 'assets/nightBg.jpg';
             textColor = Colors.white;
           } else {
-            backgroundColor = Colors.white;
+            backgroundImage = 'assets/morningBg.jpg';
             textColor = Colors.black;
           }
 
@@ -86,8 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
 
+                  const SizedBox(height: 20),
+
                   // Weather Icon
                   Center(child: getWeatherIcon(weather.weatherCodes)),
+
+                  const SizedBox(height: 20),
+
                   // Temperature
                   Center(
                     child: Text(
@@ -99,6 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 5),
+
                   // Weather Condition
                   Center(
                     child: Text(
@@ -117,6 +125,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Center(
                     child: Text(
                       weather.formattedTime,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+
+                  Center(
+                    child: Text(
+                      weather.amPm,
                       style: TextStyle(
                         color: textColor,
                         fontSize: 16,
@@ -208,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 8),
 
                   // SEARCH BUTTON
@@ -230,6 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text('Search', style: TextStyle(color: textColor)),
                     ),
                   ),
+
                   const SizedBox(height: 20),
                 ],
               ),
@@ -303,18 +324,30 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         return Scaffold(
-          backgroundColor: backgroundColor,
+          extendBodyBehindAppBar:
+              true, // This makes body fill entire screen behind app bar
           appBar: AppBar(
-            toolbarHeight: 10,
+            toolbarHeight: 0,
             backgroundColor: Colors.transparent,
+            elevation: 0,
             systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarBrightness: backgroundColor == Colors.black
+              statusBarBrightness: textColor == Colors.white
                   ? Brightness.dark
                   : Brightness.light,
+              statusBarIconBrightness: textColor == Colors.white
+                  ? Brightness.light
+                  : Brightness.dark,
             ),
-            elevation: 0,
           ),
-          body: child,
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(backgroundImage),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(child: child),
+          ),
         );
       },
     );
