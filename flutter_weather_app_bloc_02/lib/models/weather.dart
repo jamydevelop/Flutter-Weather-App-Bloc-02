@@ -12,7 +12,7 @@ class Weather {
     return Weather(
       city: json['name'],
       description: json['weather'][0]['description'],
-      temperature: json['main']['temp'],
+      temperature: json['main']['temp'].toString(),
     );
   }
 }
