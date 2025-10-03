@@ -12,25 +12,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
+
   Widget getWeatherIcon(int code) {
-    switch (code) {
-      case >= 200 && < 300:
-        return Image.asset('assets/1.png');
-      case >= 300 && < 400:
-        return Image.asset('assets/2.png');
-      case >= 500 && < 600:
-        return Image.asset('assets/3.png');
-      case >= 600 && < 700:
-        return Image.asset('assets/4.png');
-      case >= 700 && < 800:
-        return Image.asset('assets/5.png');
-      case == 800:
-        return Image.asset('assets/6.png');
-      case > 800 && <= 804:
-        return Image.asset('assets/7.png');
-      default:
-        return Image.asset('assets/7.png');
+    if (code >= 200 && code < 300) {
+      return Image.asset('assets/1.png');
+    } else if (code >= 300 && code < 400) {
+      return Image.asset('assets/2.png');
+    } else if (code >= 500 && code < 600) {
+      return Image.asset('assets/3.png');
+    } else if (code >= 600 && code < 700) {
+      return Image.asset('assets/4.png');
+    } else if (code >= 700 && code < 800) {
+      return Image.asset('assets/5.png');
+    } else if (code == 800) {
+      return Image.asset('assets/6.png');
+    } else if (code > 800 && code <= 804) {
+      return Image.asset('assets/7.png');
+    } else {
+      return Image.asset('assets/7.png');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch Manila weather on app start
+    context.read<WeatherBloc>().add(GetWeatherEvent('Manila'));
   }
 
   @override
@@ -47,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state is WeatherBlocLoadingState) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherBlocSuccessState) {
             final weather = state.weather;
             return SafeArea(
@@ -63,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(width: 8),
                         Text(
                           weather.city,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w300,
                             fontSize: 25,
@@ -74,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 20),
 
                     // Weather Icon
-                    Center(child: getWeatherIcon(state.weather.weatherCodes)),
+                    Center(child: getWeatherIcon(weather.weatherCodes)),
 
                     const SizedBox(height: 20),
 
@@ -82,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Center(
                       child: Text(
                         weather.temperature,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 55,
                           fontWeight: FontWeight.w600,
@@ -96,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Center(
                       child: Text(
                         weather.weatherCondition,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
@@ -109,8 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Date and Time
                     Center(
                       child: Text(
-                        weather.timestamp.toString(),
-                        style: TextStyle(
+                        weather.formattedTime,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w300,
@@ -132,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Humidity',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -142,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   weather.humidity,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
@@ -161,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Wind Speed',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -171,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   weather.windSpeed,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
@@ -194,7 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
+
                     // SEARCH BUTTON
                     Center(
                       child: ElevatedButton(
@@ -205,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               GetWeatherEvent(city),
                             );
                           }
-                          _controller.text = '';
+                          _controller.clear();
                         },
                         child: const Text('Search'),
                       ),
@@ -221,10 +229,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'Something went wrong. Try another city.',
                       style: TextStyle(color: Colors.red),
-                    ), // TEXT FIELD to enter city name
+                    ),
+
+                    const SizedBox(height: 8),
+
                     TextField(
                       controller: _controller,
                       decoration: const InputDecoration(
@@ -234,7 +245,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    // SEARCH BUTTON
                     ElevatedButton(
                       onPressed: () {
                         final city = _controller.text.trim();
@@ -243,46 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             GetWeatherEvent(city),
                           );
                         }
-                        _controller.text = '';
-                      },
-                      child: const Text('Search'),
-                    ),
-                  ],
-                ),
-              ),
-            );
-            // const Text(
-            //   'Something went wrong. Try another city.',
-            //   style: TextStyle(color: Colors.red),
-            // );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      'Enter a city name to get started.',
-                    ), // TEXT FIELD to enter city name
-                    TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter city name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // SEARCH BUTTON
-                    ElevatedButton(
-                      onPressed: () {
-                        final city = _controller.text.trim();
-                        if (city.isNotEmpty) {
-                          context.read<WeatherBloc>().add(
-                            GetWeatherEvent(city),
-                          );
-                        }
-                        _controller.text = '';
+                        _controller.clear();
                       },
                       child: const Text('Search'),
                     ),
@@ -291,6 +262,37 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
+
+          // Fallback UI for WeatherBlocInitialState or any other unexpected state
+          return Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Center(
+              child: Column(
+                children: [
+                  const Text('Enter a city name to get started.'),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter city name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      final city = _controller.text.trim();
+                      if (city.isNotEmpty) {
+                        context.read<WeatherBloc>().add(GetWeatherEvent(city));
+                      }
+                      _controller.clear();
+                    },
+                    child: const Text('Search'),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
