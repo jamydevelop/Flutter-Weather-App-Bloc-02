@@ -174,17 +174,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: OutlineInputBorder(),
                       ),
                     ),
+                    SizedBox(height: 8),
                     // SEARCH BUTTON
-                    ElevatedButton(
-                      onPressed: () {
-                        final city = _controller.text.trim();
-                        if (city.isNotEmpty) {
-                          context.read<WeatherBloc>().add(
-                            GetWeatherEvent(city),
-                          );
-                        }
-                      },
-                      child: const Text('Search'),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          final city = _controller.text.trim();
+                          if (city.isNotEmpty) {
+                            context.read<WeatherBloc>().add(
+                              GetWeatherEvent(city),
+                            );
+                          }
+                          _controller.text = '';
+                        },
+                        child: const Text('Search'),
+                      ),
                     ),
                     const SizedBox(height: 20),
                   ],
@@ -223,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             GetWeatherEvent(city),
                           );
                         }
+                        _controller.text = '';
                       },
                       child: const Text('Search'),
                     ),
