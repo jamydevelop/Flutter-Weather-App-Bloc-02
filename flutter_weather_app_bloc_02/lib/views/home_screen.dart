@@ -42,210 +42,182 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 10,
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
-        ),
-        elevation: 0,
-      ),
-      body: BlocBuilder<WeatherBloc, WeatherState>(
-        builder: (context, state) {
-          if (state is WeatherBlocLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is WeatherBlocSuccessState) {
-            final weather = state.weather;
-            return SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // City Name Row
-                    Row(
-                      children: [
-                        Image.asset('assets/pin16.png'),
-                        const SizedBox(width: 8),
-                        Text(
-                          weather.city,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
+    return BlocBuilder<WeatherBloc, WeatherState>(
+      builder: (context, state) {
+        // Default colors
+        Color backgroundColor = Colors.white;
+        Color textColor = Colors.black;
 
-                    // Weather Icon
-                    Center(child: getWeatherIcon(weather.weatherCodes)),
+        Widget child;
 
-                    const SizedBox(height: 20),
+        if (state is WeatherBlocLoadingState) {
+          child = const Center(child: CircularProgressIndicator());
+        } else if (state is WeatherBlocSuccessState) {
+          final weather = state.weather;
 
-                    // Temperature
-                    Center(
-                      child: Text(
-                        weather.temperature,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 55,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+          // Change colors based on AM/PM
+          if (weather.amPm.toLowerCase() == 'pm') {
+            backgroundColor = Colors.black;
+            textColor = Colors.white;
+          } else {
+            backgroundColor = Colors.white;
+            textColor = Colors.black;
+          }
 
-                    const SizedBox(height: 5),
-
-                    // Weather Condition
-                    Center(
-                      child: Text(
-                        weather.weatherCondition,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 5),
-
-                    // Date and Time
-                    Center(
-                      child: Text(
-                        weather.formattedTime,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+          child = SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // City Name Row
+                  Row(
+                    children: [
+                      Image.asset('assets/pin16.png'),
+                      const SizedBox(width: 8),
+                      Text(
+                        weather.city,
+                        style: TextStyle(
+                          color: textColor,
                           fontWeight: FontWeight.w300,
+                          fontSize: 25,
                         ),
                       ),
-                    ),
+                    ],
+                  ),
 
-                    const SizedBox(height: 30),
-
-                    // Humidity & Wind Speed
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Humidity
-                        Row(
-                          children: [
-                            Image.asset('assets/humidity512.png', scale: 10),
-                            const SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Humidity',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  weather.humidity,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        // Wind Speed
-                        Row(
-                          children: [
-                            Image.asset('assets/windspeed512.png', scale: 12),
-                            const SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Wind Speed',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  weather.windSpeed,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    // Text Field
-                    TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter city name',
-                        border: OutlineInputBorder(),
+                  // Weather Icon
+                  Center(child: getWeatherIcon(weather.weatherCodes)),
+                  // Temperature
+                  Center(
+                    child: Text(
+                      '${weather.temperature}°C',
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 55,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 8),
-
-                    // SEARCH BUTTON
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final city = _controller.text.trim();
-                          if (city.isNotEmpty) {
-                            context.read<WeatherBloc>().add(
-                              GetWeatherEvent(city),
-                            );
-                          }
-                          _controller.clear();
-                        },
-                        child: const Text('Search'),
+                  ),
+                  // Weather Condition
+                  Center(
+                    child: Text(
+                      weather.weatherCondition,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            );
-          } else if (state is WeatherBlocFailureState) {
-            return Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      'Something went wrong. Try another city.',
-                      style: TextStyle(color: Colors.red),
-                    ),
+                  ),
 
-                    const SizedBox(height: 8),
+                  const SizedBox(height: 5),
 
-                    TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter city name',
-                        border: OutlineInputBorder(),
+                  // Date and Time
+                  Center(
+                    child: Text(
+                      weather.formattedTime,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                  ),
 
-                    ElevatedButton(
+                  const SizedBox(height: 30),
+
+                  // Humidity & Wind Speed
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Humidity
+                      Row(
+                        children: [
+                          Image.asset('assets/humidity512.png', scale: 10),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Humidity',
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              Text(
+                                weather.humidity,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      // Wind Speed
+                      Row(
+                        children: [
+                          Image.asset('assets/windspeed512.png', scale: 12),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Wind Speed',
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              Text(
+                                weather.windSpeed,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // Text Field
+                  TextField(
+                    controller: _controller,
+                    style: TextStyle(color: textColor),
+                    decoration: InputDecoration(
+                      labelText: 'Enter city name',
+                      labelStyle: TextStyle(color: textColor),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: textColor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: textColor),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // SEARCH BUTTON
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: textColor == Colors.white
+                            ? Colors.grey[800]
+                            : null,
+                      ),
                       onPressed: () {
                         final city = _controller.text.trim();
                         if (city.isNotEmpty) {
@@ -255,16 +227,51 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                         _controller.clear();
                       },
-                      child: const Text('Search'),
+                      child: Text('Search', style: TextStyle(color: textColor)),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-            );
-          }
-
-          // Fallback UI for WeatherBlocInitialState or any other unexpected state
-          return Padding(
+            ),
+          );
+        } else if (state is WeatherBlocFailureState) {
+          // Show error with default colors (red text) and input for retry
+          child = Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Center(
+              child: Column(
+                children: [
+                  const Text(
+                    'Something went wrong. Try another city.',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter city name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      final city = _controller.text.trim();
+                      if (city.isNotEmpty) {
+                        context.read<WeatherBloc>().add(GetWeatherEvent(city));
+                      }
+                      _controller.clear();
+                    },
+                    child: const Text('Search'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else {
+          // Fallback UI for initial or other states with default colors
+          child = Padding(
             padding: const EdgeInsets.all(28.0),
             child: Center(
               child: Column(
@@ -293,8 +300,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           );
-        },
-      ),
+        }
+
+        return Scaffold(
+          backgroundColor: backgroundColor,
+          appBar: AppBar(
+            toolbarHeight: 10,
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarBrightness: backgroundColor == Colors.black
+                  ? Brightness.dark
+                  : Brightness.light,
+            ),
+            elevation: 0,
+          ),
+          body: child,
+        );
+      },
     );
   }
 }

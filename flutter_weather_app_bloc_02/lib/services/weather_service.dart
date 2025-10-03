@@ -8,7 +8,7 @@ class WeatherService {
   Future<Map<String, dynamic>> fetchWeather(String city) async {
     final response = await http.get(
       Uri.parse(
-        '$baseURL?q=$city&appid=ea1ddbc399a51b3b1b17bb8c56dcc6ea&units=imperial',
+        '$baseURL?q=$city&appid=ea1ddbc399a51b3b1b17bb8c56dcc6ea&units=metric',
       ),
     );
 

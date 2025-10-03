@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:intl/intl.dart';
 
 class Weather {
@@ -10,6 +9,7 @@ class Weather {
   final int timestamp;
   final int weatherCodes;
   final int timezoneOffset;
+
   Weather({
     required this.city,
     required this.weatherCondition,
@@ -25,7 +25,7 @@ class Weather {
     return Weather(
       city: json['name'],
       weatherCondition: json['weather'][0]['main'],
-      temperature: json['main']['temp'].toString(),
+      temperature: (json['main']['temp'] as num).round().toString(),
       humidity: json['main']['humidity'].toString(),
       windSpeed: json['wind']['speed'].toString(),
       timestamp: json['dt'],
@@ -34,7 +34,6 @@ class Weather {
     );
   }
 
-  // Format timestamp as local city time string using timezone offset
   String get formattedTime {
     final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
       timestamp * 1000,
@@ -42,5 +41,25 @@ class Weather {
     );
     final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
     return DateFormat.jm().format(localDateTime);
+  }
+
+  // New getter for hour and minutes only (e.g. "4:43")
+  String get formattedHourMinute {
+    final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
+      timestamp * 1000,
+      isUtc: true,
+    );
+    final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
+    return DateFormat('h:mm').format(localDateTime);
+  }
+
+  // New getter for AM or PM only
+  String get amPm {
+    final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
+      timestamp * 1000,
+      isUtc: true,
+    );
+    final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
+    return DateFormat('a').format(localDateTime);
   }
 }
