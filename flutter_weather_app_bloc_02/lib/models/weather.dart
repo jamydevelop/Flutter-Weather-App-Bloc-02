@@ -43,7 +43,7 @@ class Weather {
     return DateFormat.jm().format(localDateTime);
   }
 
-  // New getter for hour and minutes only (e.g. "4:43")
+  //getter for hour and minutes only (e.g. "4:43")
   String get formattedHourMinute {
     final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
       timestamp * 1000,
@@ -53,7 +53,7 @@ class Weather {
     return DateFormat('h:mm').format(localDateTime);
   }
 
-  // New getter for AM or PM only
+  //getter for AM or PM only
   String get amPm {
     final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
       timestamp * 1000,

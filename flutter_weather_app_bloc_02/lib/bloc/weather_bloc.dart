@@ -9,8 +9,8 @@ part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<FetchWeatherEvent, WeatherState> {
-  final WeatherService _weatherService =
-      WeatherService(); // create service instance
+  // create service instance
+  final WeatherService _weatherService = WeatherService();
 
   WeatherBloc() : super(WeatherBlocInitialState()) {
     on<GetWeatherEvent>((event, emit) async {
