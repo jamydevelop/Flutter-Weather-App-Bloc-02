@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           const Text(
-                            'City: ',
+                            'City Name: ',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -71,14 +71,14 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           const Text(
-                            'Description: ',
+                            'Weather Condition: ',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
                           Text(
-                            weather.description,
+                            weather.weatherCondition,
                             style: const TextStyle(fontSize: 20),
                           ),
                         ],
@@ -95,6 +95,67 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             '${weather.temperature} °F',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Text(
+                            'Humidity: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            weather.humidity,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Wind Speed: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            weather.windSpeed,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'DT: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            weather.timestamp.toString(),
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Weather Codes: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            weather.weatherCodes.toString(),
                             style: const TextStyle(fontSize: 20),
                           ),
                         ],
