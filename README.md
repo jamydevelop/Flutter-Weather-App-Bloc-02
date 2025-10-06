@@ -42,6 +42,7 @@ This project delivers a seamless user experience with real-time weather updates 
 2. **Paste the URL into Github Desktop**
 <img width="495" height="288" alt="2" src="https://github.com/user-attachments/assets/6150805a-8cfa-4bc1-92f8-890b3ba9dc6f" />
 
+
 3. **Open your IDE terminal run: **
    ```bash
    flutter pub get
