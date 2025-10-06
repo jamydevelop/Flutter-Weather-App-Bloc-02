@@ -57,3 +57,11 @@ This project delivers a seamless user experience with real-time weather updates 
 
 ---
 ## DIFFERENT APP STATE UI OUTPUT
+---
+### Initial State
+
+### Loading State
+
+### Success State
+
+### Failure State
