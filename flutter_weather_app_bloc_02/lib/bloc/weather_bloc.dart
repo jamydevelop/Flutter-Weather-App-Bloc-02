@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_weather_app_bloc_02/services/weather_service.dart';
 import 'package:meta/meta.dart';
 
-import 'package:flutter_weather_app_bloc_02/models/weather.dart';
+import 'package:flutter_weather_app_bloc_02/models/weather_model.dart';
 
 part 'weather_event.dart';
 part 'weather_state.dart';
@@ -21,7 +21,7 @@ class WeatherBloc extends Bloc<FetchWeatherEvent, WeatherState> {
         final weatherJson = await _weatherService.fetchWeather(event.city);
 
         // Convert raw JSON into Weather model
-        final weather = Weather.fromJson(weatherJson);
+        final weather = WeatherModel.fromJson(weatherJson);
 
         // Emit success state with weather data
         emit(WeatherBlocSuccessState(weather));

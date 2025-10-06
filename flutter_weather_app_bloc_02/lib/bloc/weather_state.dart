@@ -15,7 +15,7 @@ final class WeatherBlocLoadingState extends WeatherState {}
 final class WeatherBlocFailureState extends WeatherState {}
 
 final class WeatherBlocSuccessState extends WeatherState {
-  final Weather weather;
+  final WeatherModel weather;
 
   const WeatherBlocSuccessState(this.weather);
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app_bloc_02/bloc/weather_bloc.dart';
-import 'package:flutter_weather_app_bloc_02/models/weather.dart';
+import 'package:flutter_weather_app_bloc_02/models/weather_model.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/weather_icon_widget.dart';
 
 class SuccessStateWidget extends StatelessWidget {
-  final Weather weather;
+  final WeatherModel weather;
   final Color textColor;
   final TextEditingController controller;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather_app_bloc_02/bloc/weather_bloc.dart';
-import 'package:flutter_weather_app_bloc_02/models/weather.dart';
+import 'package:flutter_weather_app_bloc_02/models/weather_model.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/failure_state_widget.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/initial_state_widget.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/success_state_widget.dart';
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (state is WeatherBlocLoadingState) {
           child = const Center(child: CircularProgressIndicator());
         } else if (state is WeatherBlocSuccessState) {
-          final Weather weather = state.weather;
+          final WeatherModel weather = state.weather;
 
           // Switch to night theme if PM
           if (weather.amPm.toLowerCase() == 'pm') {

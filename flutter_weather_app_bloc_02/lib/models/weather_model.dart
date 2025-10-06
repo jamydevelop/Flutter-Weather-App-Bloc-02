@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class Weather {
+class WeatherModel {
   final String city;
   final String weatherCondition;
   final String temperature;
@@ -10,7 +10,7 @@ class Weather {
   final int weatherCodes;
   final int timezoneOffset;
 
-  Weather({
+  WeatherModel({
     required this.city,
     required this.weatherCondition,
     required this.temperature,
@@ -21,8 +21,8 @@ class Weather {
     required this.timezoneOffset,
   });
 
-  factory Weather.fromJson(Map<String, dynamic> json) {
-    return Weather(
+  factory WeatherModel.fromJson(Map<String, dynamic> json) {
+    return WeatherModel(
       city: json['name'],
       weatherCondition: json['weather'][0]['main'],
       temperature: (json['main']['temp'] as num).round().toString(),
