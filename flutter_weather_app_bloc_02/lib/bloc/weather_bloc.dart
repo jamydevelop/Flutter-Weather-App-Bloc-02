@@ -27,7 +27,7 @@ class WeatherBloc extends Bloc<FetchWeatherEvent, WeatherState> {
         emit(WeatherBlocSuccessState(weather));
       } catch (e) {
         // If something goes wrong, show failure state
-        print('ERROR: $e');
+        //print('ERROR: $e');
         emit(WeatherBlocFailureState());
       }
     });
