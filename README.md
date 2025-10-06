@@ -37,3 +37,5 @@ This project delivers a seamless user experience with real-time weather updates 
 
    ```bash
    git clone https://github.com/jamydevelop/Flutter-Weather-App-Bloc-02
+<img width="1267" height="790" alt="1" src="https://github.com/user-attachments/assets/f862ae19-516e-4e59-b74b-7b02f11b8e73" />
+
