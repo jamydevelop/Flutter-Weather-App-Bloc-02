@@ -54,3 +54,6 @@ This project delivers a seamless user experience with real-time weather updates 
    ```bash
    flutter run
 <img width="1909" height="999" alt="5" src="https://github.com/user-attachments/assets/54fbb65f-f19e-45a1-82b9-8d9673c7cdaf" />
+
+---
+## DIFFERENT APP STATE UI OUTPUT
