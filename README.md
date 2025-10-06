@@ -49,3 +49,7 @@ This project delivers a seamless user experience with real-time weather updates 
 **OUTPUT:**
 <img width="1494" height="984" alt="4" src="https://github.com/user-attachments/assets/bf768a87-b262-4c93-9dad-6d4d6843ab79" />
 
+4. **Open your IDE terminal run: **
+   ```bash
+   flutter run
+<img width="1909" height="999" alt="5" src="https://github.com/user-attachments/assets/54fbb65f-f19e-45a1-82b9-8d9673c7cdaf" />
