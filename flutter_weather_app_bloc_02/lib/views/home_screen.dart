@@ -6,6 +6,7 @@ import 'package:flutter_weather_app_bloc_02/models/weather_model.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/failure_state_widget.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/initial_state_widget.dart';
 import 'package:flutter_weather_app_bloc_02/views/widgets/success_state_widget.dart';
+import 'package:flutter_weather_app_bloc_02/extensions/int_extensions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,18 +45,26 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (state is WeatherBlocSuccessState) {
           final WeatherModel weather = state.weather;
 
-          // Switch to night theme if PM
-          if (weather.amPm.toLowerCase() == 'pm') {
+          // Get formatted time and AM/PM using extension methods
+          String formattedTime = weather.timestamp.formattedTime(
+            weather.timezoneOffset,
+          );
+          String amPmValue = weather.timestamp.amPm(weather.timezoneOffset);
+
+          // Set theme based on AM/PM
+          if (amPmValue.toLowerCase() == 'pm') {
             backgroundImage = 'assets/nightBg.jpg';
             textColor = Colors.white;
           } else {
             backgroundImage = 'assets/morningBg.jpg';
             textColor = Colors.black;
           }
+
           child = SuccessStateWidget(
             weather: weather,
             textColor: textColor,
             controller: _controller,
+            formattedTime: formattedTime,
           );
         } else if (state is WeatherBlocFailureState) {
           // Error UI

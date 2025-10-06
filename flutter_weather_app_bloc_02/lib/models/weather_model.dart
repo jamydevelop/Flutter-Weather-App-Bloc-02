@@ -1,5 +1,3 @@
-import 'package:flutter_weather_app_bloc_02/extensions/int_extensions.dart';
-
 class WeatherModel {
   final String city;
   final String weatherCondition;
@@ -33,9 +31,4 @@ class WeatherModel {
       timezoneOffset: json['timezone'],
     );
   }
-
-  String get formattedTime => timestamp.formattedTime(timezoneOffset);
-  String get formattedHourMinute =>
-      timestamp.formattedHourMinute(timezoneOffset);
-  String get amPm => timestamp.amPm(timezoneOffset);
 }

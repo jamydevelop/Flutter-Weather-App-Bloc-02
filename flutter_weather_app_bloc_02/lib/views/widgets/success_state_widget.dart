@@ -8,12 +8,14 @@ class SuccessStateWidget extends StatelessWidget {
   final WeatherModel weather;
   final Color textColor;
   final TextEditingController controller;
+  final String formattedTime; // New parameter
 
   const SuccessStateWidget({
     super.key,
     required this.weather,
     required this.textColor,
     required this.controller,
+    required this.formattedTime, // New parameter
   });
 
   @override
@@ -78,7 +80,7 @@ class SuccessStateWidget extends StatelessWidget {
             // Date and Time
             Center(
               child: Text(
-                weather.formattedTime,
+                formattedTime, // Use passed formattedTime here
                 style: TextStyle(
                   color: textColor,
                   fontSize: 16,
