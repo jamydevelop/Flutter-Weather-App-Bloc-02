@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+import 'package:flutter_weather_app_bloc_02/extensions/int_extensions.dart';
 
 class WeatherModel {
   final String city;
@@ -34,32 +34,8 @@ class WeatherModel {
     );
   }
 
-  String get formattedTime {
-    final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
-      timestamp * 1000,
-      isUtc: true,
-    );
-    final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
-    return DateFormat.jm().format(localDateTime);
-  }
-
-  //getter for hour and minutes only (e.g. "4:43")
-  String get formattedHourMinute {
-    final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
-      timestamp * 1000,
-      isUtc: true,
-    );
-    final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
-    return DateFormat('h:mm').format(localDateTime);
-  }
-
-  //getter for AM or PM only
-  String get amPm {
-    final utcDateTime = DateTime.fromMillisecondsSinceEpoch(
-      timestamp * 1000,
-      isUtc: true,
-    );
-    final localDateTime = utcDateTime.add(Duration(seconds: timezoneOffset));
-    return DateFormat('a').format(localDateTime);
-  }
+  String get formattedTime => timestamp.formattedTime(timezoneOffset);
+  String get formattedHourMinute =>
+      timestamp.formattedHourMinute(timezoneOffset);
+  String get amPm => timestamp.amPm(timezoneOffset);
 }
