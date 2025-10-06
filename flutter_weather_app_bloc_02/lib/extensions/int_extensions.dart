@@ -1,4 +1,3 @@
-// string_extensions.dart
 import 'package:intl/intl.dart';
 
 extension TimestampFormatting on int {
