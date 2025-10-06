@@ -31,7 +31,7 @@ This project delivers a seamless user experience with real-time weather updates 
 
 ## 🚀 Getting Started
 
-### 🔧 Installation
+### 🔧 Installation And Running
 
 1. **Clone the repository:**
 
