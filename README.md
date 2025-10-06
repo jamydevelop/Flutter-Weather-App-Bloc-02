@@ -73,4 +73,7 @@ This project delivers a seamless user experience with real-time weather updates 
 #### Type random text to see the "Failure State"
 <img width="409" height="868" alt="10" src="https://github.com/user-attachments/assets/a7421879-07cf-48e2-9aa6-247bda28924b" />
 <img width="397" height="864" alt="11" src="https://github.com/user-attachments/assets/482cca66-40a1-4fd3-b40d-19864f398836" />
+---
+# END 
+---
 
