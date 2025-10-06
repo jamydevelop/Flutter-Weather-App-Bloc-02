@@ -59,9 +59,18 @@ This project delivers a seamless user experience with real-time weather updates 
 ## DIFFERENT APP STATE UI OUTPUT
 ---
 ### Initial State
+<img width="408" height="872" alt="6" src="https://github.com/user-attachments/assets/576b8cf5-30f0-4a98-a2c7-05d0df31ab48" />
 
 ### Loading State
+<img width="409" height="872" alt="7" src="https://github.com/user-attachments/assets/57e70161-95b1-40e5-aca9-844a4c40331a" />
 
 ### Success State
+#### Type any City name
+<img width="408" height="880" alt="8" src="https://github.com/user-attachments/assets/05ef8829-7bb4-44af-b26c-519c7f5e53bc" />
+<img width="408" height="868" alt="9" src="https://github.com/user-attachments/assets/014d7d53-ed08-4607-9a0a-77a14c82da0e" />
 
 ### Failure State
+#### Type random text to see the "Failure State"
+<img width="409" height="868" alt="10" src="https://github.com/user-attachments/assets/a7421879-07cf-48e2-9aa6-247bda28924b" />
+<img width="397" height="864" alt="11" src="https://github.com/user-attachments/assets/482cca66-40a1-4fd3-b40d-19864f398836" />
+
